@@ -1,0 +1,10 @@
+import {ResponsiveContainer,LineChart,Line,AreaChart,Area,XAxis,YAxis,Tooltip,CartesianGrid,Legend,ScatterChart,Scatter} from 'recharts';
+import {Chart,Empty} from '../components/ui';import {histPreview,rocPreview,prPreview,scatterPreview} from '../mock/fixtures';
+const ax={stroke:'#8493ad',fontSize:11};const tt={contentStyle:{background:'#0d1424',border:'1px solid #1c2740',fontSize:12}};
+const Hist=({title}:{title:string})=>(<Chart title={title}><ResponsiveContainer><AreaChart data={histPreview}><CartesianGrid stroke="#1c2740"/><XAxis dataKey="x" {...ax}/><YAxis {...ax}/><Tooltip {...tt}/><Legend/>
+<Area dataKey="bg" name="background" stroke="#22d3ee" fill="#22d3ee" fillOpacity={.15}/><Area dataKey="sig" name="signal" stroke="#8b7cf6" fill="#8b7cf6" fillOpacity={.15}/></AreaChart></ResponsiveContainer></Chart>);
+const Curve=({title,data,x,y}:{title:string;data:object[];x:string;y:string})=>(<Chart title={title}><ResponsiveContainer><LineChart data={data}><CartesianGrid stroke="#1c2740"/><XAxis dataKey={x} {...ax}/><YAxis {...ax}/><Tooltip {...tt}/><Line dataKey={y} stroke="#22d3ee" dot={false}/></LineChart></ResponsiveContainer></Chart>);
+export const Scatter2=()=>(<Chart title="Score vs jet mass"><ResponsiveContainer><ScatterChart><CartesianGrid stroke="#1c2740"/><XAxis dataKey="mass" name="mass" {...ax}/><YAxis dataKey="score" name="score" {...ax}/><Tooltip {...tt}/><Scatter data={scatterPreview} fill="#8b7cf6"/></ScatterChart></ResponsiveContainer></Chart>);
+export default function Analytics(){return(<div className="space-y-3"><Empty text="No experiment results loaded. Charts below show synthetic curves for layout only; no metrics are derived from them."/>
+<div className="grid gap-3 lg:grid-cols-2"><Hist title="Reconstruction-error distribution"/><Hist title="Anomaly-score distribution"/>
+<Curve title="ROC curve" data={rocPreview} x="fpr" y="tpr"/><Curve title="Precision-recall curve" data={prPreview} x="recall" y="precision"/><Hist title="Background vs signal score"/></div></div>);}

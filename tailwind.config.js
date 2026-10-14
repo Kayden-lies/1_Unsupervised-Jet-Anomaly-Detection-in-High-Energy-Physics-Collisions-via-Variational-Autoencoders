@@ -1,0 +1,1 @@
+export default {content:['./index.html','./src/**/*.{ts,tsx}'],theme:{extend:{colors:{bg:'#070b16',panel:'#0d1424',line:'#1c2740',cyan:{DEFAULT:'#22d3ee'},violet:{DEFAULT:'#8b7cf6'},ink:'#e6edf7',mute:'#8493ad'},fontFamily:{sans:['IBM Plex Sans','system-ui','sans-serif'],mono:['IBM Plex Mono','ui-monospace','monospace']}}}};

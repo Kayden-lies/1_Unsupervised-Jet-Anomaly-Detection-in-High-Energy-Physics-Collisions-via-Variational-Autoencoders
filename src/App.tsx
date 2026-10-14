@@ -1,0 +1,9 @@
+import {useState} from 'react';import {LayoutDashboard,Database,SlidersHorizontal,FlaskConical,BarChart3,Activity,CheckSquare,Fingerprint,Orbit} from 'lucide-react';
+import {datasets,defaultConfig,runs} from './mock/fixtures';import {Ctx,ModelConfig} from './types';
+import {Overview,Datasets,ModelLab,Matrix,Evaluation,Repro} from './pages/pages';import Analytics from './pages/Analytics';import Mass from './pages/Mass';
+const nav=[['Overview',LayoutDashboard,Overview],['Dataset Explorer',Database,Datasets],['Model Lab',SlidersHorizontal,ModelLab],['Experiment Matrix',FlaskConical,Matrix],['Anomaly Analytics',BarChart3,Analytics],['Mass Sculpting',Activity,Mass],['Evaluation',CheckSquare,Evaluation],['Reproducibility',Fingerprint,Repro]] as const;
+export default function App(){const[i,setI]=useState(0);const[dsId,setDsId]=useState(datasets[0].id);const[cfg,setCfg]=useState<ModelConfig>(defaultConfig);
+const ctx:Ctx={ds:datasets.find(d=>d.id===dsId)!,datasets,setDs:setDsId,cfg,setCfg,runs};const Page=nav[i][2] as (c:Ctx)=>JSX.Element;
+return(<div className="flex min-h-screen"><aside className="w-52 shrink-0 border-r border-line bg-panel p-3"><div className="mb-5 flex items-center gap-2 px-2 pt-1"><Orbit className="text-cyan" size={20}/><div className="text-sm font-semibold leading-tight">Jet VAE<br/><span className="font-normal text-mute">Anomaly Lab</span></div></div>
+<nav className="space-y-0.5">{nav.map(([n,Icon],k)=><button key={n} onClick={()=>setI(k)} className={`flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-sm ${k===i?'bg-cyan/10 text-cyan':'text-mute hover:text-ink'}`}><Icon size={15}/>{n}</button>)}</nav></aside>
+<main className="min-w-0 flex-1 p-5"><h1 className="mb-1 text-lg font-semibold">{nav[i][0]}</h1><p className="mb-4 text-xs text-mute">Unsupervised jet anomaly detection via variational autoencoders · frontend preview, no backend connected</p><Page {...ctx}/></main></div>);}
